@@ -4,7 +4,8 @@ from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
 
-BASE_DIR = 'Path to base'
+# Data PATH
+BASE_DIR = '/home/yasaman/Documents/Winter18/fluorescence/'
 HEALTH_DIR ='healthy/'
 SICK_DIR = 'sick/'
 
@@ -31,9 +32,25 @@ for im in sick:
 heal_avg = np.asarray(heal_avg_diff)
 sic_avg = np.asarray(sic_avg_diff)
 
-np.save("healthy", heal_avg)
-np.save("sick", sic_avg)
-#print("sick", sic_avg, "healthy", heal_avg)
+##
+# shuffle and set aside a test set
+test_ratio = 0.2
+heal_test_num = (test_ratio * heal_avg.shape[0])//1
+sic_test_num = (test_ratio * sic_avg.shape[0])//1
+
+np.random.shuffle(heal_avg)
+np.random.shuffle(sic_avg)
+
+test_healthy = heal_avg[:heal_test_num]
+train_healthy = heal_avg[heal_test_num:]
+test_sick = sic_avg[:sic_test_num]
+train_sick = sic_avg[sic_test_num:]
+
+
+np.save("test_healthy", test_healthy)
+np.save("train_healthy", train_healthy)
+np.save("test_sick", test_sick)
+np.save("train_sick", train_sick)
 
 '''
 fig1 = plt.figure()
