@@ -9,6 +9,15 @@ BASE_DIR = '/home/yasaman/Documents/Winter18/fluorescence/'
 HEALTH_DIR ='healthy/'
 SICK_DIR = 'sick/'
 
+
+def process_image(im):
+    ''' im is Image object, returned by call to open (Pillow) '''
+    im_arr = np.asarray(im, dtype='float32')
+    im_arr = im_arr - im_arr.mean()
+    thresh= im_arr[:,:,0] > np.percentile(im_arr[:,:,0], 80)
+    diff = im_arr[thresh, 0] - im_arr[thresh, 1]
+    return diff
+
 healthy = os.listdir(os.path.join(BASE_DIR, HEALTH_DIR))
 sick = os.listdir(os.path.join(BASE_DIR, SICK_DIR))
 
@@ -17,26 +26,23 @@ sic_avg_diff = []
 
 for im in healthy:
     healthy_im = Image.open(os.path.join(BASE_DIR, HEALTH_DIR, im))
-    heal = np.asarray(healthy_im, dtype='float32')
-    thresh_heal = heal[:,:,0] > np.percentile(heal[:,:,0], 80)
-    diff_heal = heal[thresh_heal,0] - heal[thresh_heal,1]
+    diff_heal = process_image(healthy_im)
     heal_avg_diff.append(diff_heal.mean())
     
 for im in sick:
     sick_im = Image.open(os.path.join(BASE_DIR, SICK_DIR, im))
-    sic = np.asarray(sick_im, dtype='float32')
-    thresh_sic = sic[:,:,0] > np.percentile(sic[:,:,0], 80)
-    diff_sic = sic[thresh_sic,0] - sic[thresh_sic,1]
+    diff_sic = process_image(sick_im)
     sic_avg_diff.append(diff_sic.mean())
 
 heal_avg = np.asarray(heal_avg_diff)
 sic_avg = np.asarray(sic_avg_diff)
 
+
 ##
 # shuffle and set aside a test set
 test_ratio = 0.2
-heal_test_num = (test_ratio * heal_avg.shape[0])//1
-sic_test_num = (test_ratio * sic_avg.shape[0])//1
+heal_test_num = int((test_ratio * heal_avg.shape[0])//1)
+sic_test_num = int((test_ratio * sic_avg.shape[0])//1)
 
 np.random.shuffle(heal_avg)
 np.random.shuffle(sic_avg)
