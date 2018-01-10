@@ -3,6 +3,7 @@ import os.path
 from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.stats.stats import pearsonr   
 
 # Data PATH
 BASE_DIR = '/home/yasaman/Documents/Winter18/fluorescence/'
@@ -13,26 +14,26 @@ SICK_DIR = 'sick/'
 def process_image(im):
     ''' im is Image object, returned by call to open (Pillow) '''
     im_arr = np.asarray(im, dtype='float32')
-    im_arr = im_arr - im_arr.mean()
-    thresh= im_arr[:,:,0] > np.percentile(im_arr[:,:,0], 80)
-    diff = im_arr[thresh, 0] - im_arr[thresh, 1]
-    return diff
+    #im_arr = im_arr - im_arr.mean(axis=0).mean(axis=0)
+    thresh = im_arr[:,:,0] > np.percentile(im_arr[:,:,0], 20)
+    #diff = im_arr[thresh, 0] - im_arr[thresh, 1]
+    corr, _ = pearsonr(im_arr[thresh, 0], im_arr[thresh, 1])
+    return corr
 
 healthy = os.listdir(os.path.join(BASE_DIR, HEALTH_DIR))
 sick = os.listdir(os.path.join(BASE_DIR, SICK_DIR))
-
 heal_avg_diff = []
 sic_avg_diff = []
 
 for im in healthy:
     healthy_im = Image.open(os.path.join(BASE_DIR, HEALTH_DIR, im))
     diff_heal = process_image(healthy_im)
-    heal_avg_diff.append(diff_heal.mean())
+    heal_avg_diff.append(diff_heal)
     
 for im in sick:
     sick_im = Image.open(os.path.join(BASE_DIR, SICK_DIR, im))
     diff_sic = process_image(sick_im)
-    sic_avg_diff.append(diff_sic.mean())
+    sic_avg_diff.append(diff_sic)
 
 heal_avg = np.asarray(heal_avg_diff)
 sic_avg = np.asarray(sic_avg_diff)
