@@ -25,8 +25,8 @@ sick_im = Image.open(os.path.join(BASE_DIR, SICK_DIR, sick[picked_sick]))
 heal_arr = np.asarray(healthy_im, dtype='float32')
 sic_arr = np.asarray(sick_im, dtype='float32')
 
-heal_diff= process_image(healthy_im)
-sic_diff = process_image(sick_im)
+heal_corr= process_image(healthy_im)
+sic_corr = process_image(sick_im)
 
 
 
@@ -37,7 +37,7 @@ ax11.set_title("Red channel")
 ax12 = fig1.add_subplot(122)
 ax12.imshow(heal_arr[:,:,1], cmap='gray')
 ax12.set_title("Green Channel")
-fig1.suptitle("Healthy, "+ healthy[picked_healthy]+ ", Corr is" + str(heal_diff))
+fig1.suptitle("Healthy, "+ healthy[picked_healthy]+ ", Corr is" + str(heal_corr))
 
 fig2 = plt.figure()
 ax21 = fig2.add_subplot(121)
@@ -46,5 +46,5 @@ ax21.set_title("Red channel")
 ax22 = fig2.add_subplot(122)
 ax22.imshow(sic_arr[:,:,1], cmap='gray')
 ax22.set_title("Green Channel")
-fig2.suptitle("Sick, Corr is "+ sick[picked_sick]+ "Corr is" + str(sic_diff))
+fig2.suptitle("Sick, Corr is "+ sick[picked_sick]+ "Corr is" + str(sic_corr))
 plt.show()
