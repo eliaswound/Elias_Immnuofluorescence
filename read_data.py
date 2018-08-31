@@ -34,21 +34,27 @@ if (__name__ == "__main__"):
 
 
 	test_wt = '/hpf/largeprojects/agoldenb/yasaman/Mennella_Lab/WT_cropped'
-	pcd35 = '/hpf/largeprojects/agoldenb/yasaman/Mennella_Lab/PCD35_cropped'
+	wt_17 = '/hpf/largeprojects/agoldenb/yasaman/Mennella_Lab/WT_PCD17'
+	wt_23 = '/hpf/largeprojects/agoldenb/yasaman/Mennella_Lab/WT_PCD23'
 	pcd36 = '/hpf/largeprojects/agoldenb/yasaman/Mennella_Lab/PCD36_cropped'
-	pcd38 = '/hpf/largeprojects/agoldenb/yasaman/Mennella_Lab/PCD38_cropped'
+	pcd17 = '/hpf/largeprojects/agoldenb/yasaman/Mennella_Lab/PCD17_cropped'
+	pcd23 = '/hpf/largeprojects/agoldenb/yasaman/Mennella_Lab/PCD23_cropped'
 	
 	wt_cor, _ = get_corr_im_dir(test_wt)
-	pcd35_cor, _ = get_corr_im_dir(pcd35)
+	wt17_cor, _ = get_corr_im_dir(wt_17)
+	wt23_cor, _ = get_corr_im_dir(wt_23)
 	pcd36_cor, _ = get_corr_im_dir(pcd36)
-	pcd38_cor, _ = get_corr_im_dir(pcd38)
+	pcd17_cor, _ = get_corr_im_dir(pcd17)
+	pcd23_cor, _ = get_corr_im_dir(pcd23)
 
 
 
 	np.save("wt", wt_cor)
-	np.save("pcd35", pcd35_cor)
+	np.save("wt17", wt17_cor)
+	np.save("wt23", wt23_cor)
+	np.save("pcd17", pcd17_cor)
 	np.save("pcd36", pcd36_cor)
-	np.save("pcd38", pcd38_cor)
+	np.save("pcd23", pcd23_cor)
 
 	
 		

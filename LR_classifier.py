@@ -9,16 +9,20 @@ import matplotlib.pyplot as plt
 BASE_DIR = '/hpf/largeprojects/agoldenb/yasaman/Mennella_Lab/immunofluorescence_PCD/'
 
 wt = np.load(os.path.join(BASE_DIR, "wt.npy"))
-pcd35 = np.load(os.path.join(BASE_DIR, "pcd35.npy"))
+wt17 = np.load(os.path.join(BASE_DIR, "wt17.npy"))
+wt23 = np.load(os.path.join(BASE_DIR, "wt23.npy"))
+pcd17 = np.load(os.path.join(BASE_DIR, "pcd17.npy"))
 pcd36 = np.load(os.path.join(BASE_DIR, "pcd36.npy"))
-pcd38 = np.load(os.path.join(BASE_DIR, "pcd38.npy"))
+pcd23 = np.load(os.path.join(BASE_DIR, "pcd23.npy"))
 
 #bootstrapping, 100 rounds
 # keep track of number of classified positives in each round
 predict_wt = np.zeros(100)
-predict_35 = np.zeros(100)
+predict_wt17 = np.zeros(100)
+predict_wt23 = np.zeros(100)
+predict_17 = np.zeros(100)
 predict_36 = np.zeros(100)
-predict_38 = np.zeros(100)
+predict_23 = np.zeros(100)
 
 
 for i in range(100):
@@ -43,14 +47,18 @@ for i in range(100):
 
 	#train_pred = svm.predict(train.reshape(-1,1))
 	predict_wt[i] = svm.predict(test_wt.reshape(-1,1)).mean()
-	predict_35[i] = svm.predict(pcd35.reshape(-1,1)).mean()
+	predict_wt17[i] = svm.predict(wt17.reshape(-1,1)).mean()
+	predict_wt23[i] = svm.predict(wt23.reshape(-1,1)).mean()
+	predict_17[i] = svm.predict(pcd17.reshape(-1,1)).mean()
 	predict_36[i] = svm.predict(test_36.reshape(-1,1)).mean()
-	predict_38[i] = svm.predict(pcd38.reshape(-1,1)).mean()
+	predict_23[i] = svm.predict(pcd23.reshape(-1,1)).mean()
 
 #confuse = confusion_matrix(train_labels.ravel(), train_pred, labels=[0, 1])
 #print("train confuse", confuse)
 print("wt ",predict_wt.mean(), np.percentile(predict_wt, 5), np.percentile(predict_wt, 95))
-print("35 ",predict_35.mean(), np.percentile(predict_35, 5), np.percentile(predict_35, 95))
+print("wt 17 ", predict_wt17.mean(), np.percentile(predict_wt17, 5), np.percentile(predict_wt17, 95))
+print("wt 23", predict_wt23.mean(), np.percentile(predict_wt23, 5), np.percentile(predict_wt23, 95))
+print("17 ",predict_17.mean(), np.percentile(predict_17, 5), np.percentile(predict_17, 95))
 print("36 ",predict_36.mean() ,np.percentile(predict_36, 5), np.percentile(predict_36, 95))
-print("38 ",predict_38.mean(), np.percentile(predict_38, 5), np.percentile(predict_38, 95))
+print("23 ",predict_23.mean(), np.percentile(predict_23, 5), np.percentile(predict_23, 95))
 
