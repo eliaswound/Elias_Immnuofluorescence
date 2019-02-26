@@ -5,4 +5,5 @@
 # Thanks for Yasaman and Laurens help. 
 # ------------------------------------------------------------------------------------------------------------------------------
 # This script consists several parts. 
-# 
+# Read_data first grabbs image from the path where the images are stored 
+# LR_Classifier 
