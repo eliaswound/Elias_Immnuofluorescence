@@ -6,7 +6,7 @@ from PIL import Image
 from read_data import process_image
 
 # Data PATH
-BASE_DIR = '/home/eguan'
+BASE_DIR = '/home/eguan/output'
 HEALTH_DIR ='healthy/'
 SICK_DIR = 'sick/'
 
