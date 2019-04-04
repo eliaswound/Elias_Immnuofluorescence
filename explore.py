@@ -6,7 +6,7 @@ from PIL import Image
 from read_data import process_image
 
 # Data PATH
-BASE_DIR = '/home/yasaman/Documents/Winter18/fluorescence/'
+BASE_DIR = '/home/eguan'
 HEALTH_DIR ='healthy/'
 SICK_DIR = 'sick/'
 
